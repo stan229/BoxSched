@@ -7,8 +7,8 @@ var cheerio = require('cheerio');
 var SCHED_URL = 'http://espn.go.com/boxing/story/_/id/12508267/boxing-fight-schedule';
 
 class Schedule {
-    loadSchedule() {
-        fetch(SCHED_URL).then((response) => response.text()).then(responseData => this.parseContent(responseData)).done();
+    loadSchedule(callback) {
+        return fetch(SCHED_URL).then((response) => response.text()).then(responseData => this.parseContent(responseData)).then(parsedResponse => callback(parsedResponse)).done();
     }
 
     parseContent(responseData) {
@@ -61,7 +61,7 @@ class Schedule {
         }
         monthData.events.push(event);
         scheduleData.push(monthData);
-
+        console.log(scheduleData);
         return scheduleData;
     }
 
@@ -69,8 +69,8 @@ class Schedule {
         var location       = text.substring(0, text.indexOf(':')),
             openParenIndex = location.indexOf('('),
             channel        = openParenIndex > -1 && location.substring(openParenIndex + 1, location.length - 1),
-            location       = location.substr(0, openParenIndex - 1),
-            fightsText     = text.substr(location.length + 2),
+            location       = location.substr(0, openParenIndex > -1 ? openParenIndex - 1 : location.length),
+            fightsText     = text.substr(location.length + 2 + (channel && channel.length+3)),
             fightsSplit    = fightsText.split('; '),
             fightsLength   = fightsSplit.length,
             fights         = [],
