@@ -17,7 +17,7 @@ class Event extends React.Component {
         return (
             <View>
                 <Text>{this.props.eventData.date}</Text>
-                {this.props.eventData.cards.map((card) => <Card card={card}/>)}
+                {this.props.eventData.cards.map((card) => <Card key={card.location+card.fights.length} card={card}/>)}
             </View>
         )
     }

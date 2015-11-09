@@ -15,7 +15,7 @@ var {
     AppRegistry,
     Text,
     View,
-    ScrollView,
+    ListView
     } = React;
 
 class BoxSched extends React.Component {
@@ -36,12 +36,20 @@ class BoxSched extends React.Component {
     }
 
     getInitialState() {
-        return {};
+        return {
+            activeMonth        : undefined,
+            //scheduleData       : undefined,
+            //scheduleDataSource : undefined
+        };
     }
 
     componentDidMount() {
-        new Schedule().loadSchedule((parsedResponse) => this.setState({
-            scheduleData : parsedResponse
+        new Schedule().loadSchedule((scheduleData) => this.setState({
+            activeMonth  : scheduleData[0].month,
+            scheduleData : scheduleData,
+            scheduleDataSource : new ListView.DataSource({
+                rowHasChanged : (r1, r2) => r1 !== r2
+            }).cloneWithRows(scheduleData)
         }));
     }
 
@@ -65,50 +73,39 @@ class BoxSched extends React.Component {
     }
 
     renderMainView() {
-        let scheduleData = this.state.scheduleData;
-
-        this.state.activeMonth = scheduleData[0].month;
-
         return (
             <View style={styles.mainContainer}>
                 <View style={styles.header}>
                     <Text style={styles.headerText}>{this.toTitleCase(this.state.activeMonth)}</Text>
                 </View>
-                <ScrollView styles={styles.body} onScroll={this.handleScroll}>
-                    {this.state.scheduleData.map((monthData) => monthData.events.map((eventData) => <Event eventData={eventData}/>))}
-                </ScrollView>
+                <ListView styles={styles.body}
+                          dataSource={this.state.scheduleDataSource}
+                          renderRow={this.onRenderRow}
+                          onChangeVisibleRows={(visibleRows, changedRows) => this.onChangeVisibleRows(visibleRows, changedRows)}>
+                </ListView>
             </View>
-        )
+        );
     }
 
-    handleScroll(event) {
-        console.log('scroll', event);
+    onRenderRow(rowData) {
+        return (
+            <View key="rowData.month">
+                {rowData.events.map((eventData, idx) => <Event key={eventData.date+idx} eventData={eventData}/>)}
+            </View>
+        );
     }
+    onChangeVisibleRows(visibleRows, changedRows) {
+        var visibleRowsArr = Object.keys(visibleRows.s1);
+
+        this.setState({
+            activeMonth : this.state.scheduleData[visibleRowsArr[visibleRowsArr.length - 1]].month
+        });
+    }
+
     toTitleCase(str) {
         return str.replace(/\w\S*/g, function(txt){return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();});
     }
-
-
+    
 }
-//
-//var BoxSched = React.createClass({
-//    render : function () {
-//        return (
-//            <View style={styles.container}>
-//                <Text style={styles.welcome}>
-//                    Welcome to React Native!
-//                </Text>
-//                <Text style={styles.instructions}>
-//                    To get started, edit index.ios.js
-//                </Text>
-//                <Text style={styles.instructions}>
-//                    Press Cmd+R to reload,{'\n'}
-//                    Cmd+D or shake for dev menu
-//                </Text>
-//            </View>
-//        );
-//    }
-//});
-
 
 AppRegistry.registerComponent('BoxSched', () => BoxSched);

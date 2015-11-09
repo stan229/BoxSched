@@ -19,7 +19,7 @@ class Card extends React.Component {
                 {(() => {
                      return this.props.card.channel && <Text>{this.props.card.channel}</Text>
                 })()}
-                
+
                 <Text>{this.props.card.fights}</Text>
             </View>
         )

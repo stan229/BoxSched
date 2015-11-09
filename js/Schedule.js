@@ -61,7 +61,7 @@ class Schedule {
         }
         monthData.events.push(event);
         scheduleData.push(monthData);
-        console.log(scheduleData);
+
         return scheduleData;
     }
 
