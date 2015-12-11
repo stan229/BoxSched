@@ -6,10 +6,11 @@
     "start": "react-native start"
   },
   "dependencies": {
-    "react-native": "^0.13.2",
-    "cheerio" : "^0.19.0",
-    "util": "0.10.3",
+    "cheerio": "^0.19.0",
     "events": "1.0.2",
-    "react-native-spinkit" : "^0.0.5"
+    "react-native": "^0.13.2",
+    "react-native-spinkit": "^0.0.5",
+    "react-native-vector-icons": "^0.8.5",
+    "util": "0.10.3"
   }
 }

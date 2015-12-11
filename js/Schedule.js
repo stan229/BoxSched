@@ -71,31 +71,47 @@ class Schedule {
             channel        = openParenIndex > -1 && location.substring(openParenIndex + 1, location.length - 1),
             location       = location.substr(0, openParenIndex > -1 ? openParenIndex - 1 : location.length),
             fightsText     = text.substr(location.length + 2 + (channel && channel.length+3)),
-            fightsSplit    = fightsText.split('; '),
+            fightsSplit    = fightsText.split(';').map((item) => item.trim()),
             fightsLength   = fightsSplit.length,
             fights         = [],
+            cardHasTitleFight,
+            titleFight,
             fight,
             fightText,
+            fightTextSplit,
+            roundsText,
             i;
 
         for (i = 0; i < fightsLength; i++) {
             fightText = fightsSplit[i];
 
-            fight = {
-                text       : fightText,
-                titleFight : this.isChampionFight(fightText, childNodeChildren)
+            fightTextSplit = fightText.split(',').map((item) => item.trim());
+            roundsText = fightTextSplit[1];
+            titleFight = this.isTitleFight(fightText, childNodeChildren);
+
+            if(!cardHasTitleFight) {
+                cardHasTitleFight = titleFight;
             }
+
+            fight = {
+                fighters    : fightTextSplit[0].split(/vs\.|vs/g).map((item) => item.trim()),
+                rounds      : roundsText && roundsText.substring(0, roundsText.indexOf(' ')),
+                weightClass : fightTextSplit.length == 3 && fightTextSplit[2],
+                titleFight  : titleFight
+            };
+
             fights.push(fight);
         }
 
         return {
-            location : location,
-            channel  : channel,
-            fights   : fights
+            location      : location,
+            channel       : channel,
+            fights        : fights,
+            hasTitleFight : cardHasTitleFight
         }
     }
 
-    isChampionFight(fightText, childNodeChildren) {
+    isTitleFight(fightText, childNodeChildren) {
         var length = childNodeChildren.length,
             i;
 

@@ -9,7 +9,7 @@ var {
 
 var styles = StyleSheet.create({
     loadingContainer : {
-        backgroundColor : '#D32F2F',
+        backgroundColor : '#F44336',
         flex            : 1,
         alignItems      : 'center',
         justifyContent  : 'center'
@@ -24,11 +24,12 @@ var styles = StyleSheet.create({
     },
 
     mainContainer : {
-        backgroundColor : '#FAFAFA',
+        //backgroundColor : '#FAFAFA',
+        backgroundColor : '#F44336',
         flex            : 1
     },
     header        : {
-        backgroundColor : '#D32F2F',
+        backgroundColor : '#F44336',
         marginTop       : 20,
         height          : 44,
         alignItems      : 'center',
@@ -39,8 +40,103 @@ var styles = StyleSheet.create({
         fontSize : 17
     },
     body : {
+        flex : 1,
+        //backgroundColor : '#cccccc'
+    },
+
+    event : {
+        //margin : 10,
+        //backgroundColor :'#FFFFFF'
+        backgroundColor : '#cccccc'
+    },
+    eventDate : {
+        //textAlign : 'center',
+        backgroundColor : '#FFCDD2',
+
+        //backgroundColor : '#FF5722',
+        color: '#212121',
+        //color: 'white',
+        padding: 8,
+        paddingLeft : 30,
+
+        shadowColor : 'rgba(211,47,47,.25)',
+        shadowOpacity : 0.8,
+        shadowRadius : 0.5,
+        shadowOffset : {
+            height : 2,
+            width : 0
+        }
+        //marginBottom : 10
+    },
+    card : {
+        padding: 10,
+        margin : 10,
+        backgroundColor : '#FAFAFA',
+        shadowColor : 'rgba(0,0,0,.23)',
+        shadowOpacity : 0.8,
+        shadowRadius : 3,
+        shadowOffset : {
+            height : 5,
+            width : 0
+        }
+
+        //borderBottomColor:'#B6B6B6',
+        //borderBottomWidth : 1,
+        //backgroundColor :'#FFFFFF'
+    },
+    lastCard : {
+        //backgroundColor :'#FFFFFF',
+        padding: 10,
+        backgroundColor : '#FAFAFA',
+    },
+    cardHeader : {
+        alignItems : 'stretch',
+        flexDirection : 'row',
+        padding: 10,
+        backgroundColor : '#FFCDD2',
+        //backgroundColor : '#FF5722'
+    },
+    showMoreSymbol : {
+        textAlign : 'right',
+        fontWeight : '900',
+        color : '#B6B6B6',
         flex : 1
+    },
+
+    channelView : {
+    },
+    cardSubText : {
+        //flex : 1,
+        //marginLeft : 20,
+        fontSize : 12,
+        color: '#212121'
+    },
+    fightItem : {
+        flexDirection : 'row',
+        //alignItems : 'stretch'
+    },
+
+    subView : {
+        flexDirection : 'row',
+        alignItems : 'flex-start'
+    },
+    fight : {
+        //borderBottomColor:'#B6B6B6',
+        //borderBottomWidth : 1,
+        padding: 10,
+        flex : 1,
+        flexDirection : 'row',
+
+    },
+    titleFight : {
+        width : 30,
+        marginLeft : 20
+        //flex : 1
+    },
+    opponent : {
+
     }
+
 
 });
 

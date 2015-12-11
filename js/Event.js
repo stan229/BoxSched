@@ -3,7 +3,8 @@
  */
 
 var React = require('react-native'),
-    Card  = require('./Card');
+    Card  = require('./Card'),
+    styles = require('./../style');
 
 var {
     View,
@@ -14,10 +15,13 @@ var {
 
 class Event extends React.Component {
     render() {
+        //var cards = this.props.eventData.cards.map((card,idx) => );
         return (
-            <View>
-                <Text>{this.props.eventData.date}</Text>
-                {this.props.eventData.cards.map((card) => <Card key={card.location+card.fights.length} card={card}/>)}
+            <View style={styles.event}>
+                <Text style={styles.eventDate}>{this.props.eventData.date}</Text>
+                {this.props.eventData.cards.map((card, idx) => <Card key={card.location+card.fights.length}
+                                                                     isLast={idx===this.props.eventData.cards.length-1}
+                                                                     card={card}/>)}
             </View>
         )
     }
